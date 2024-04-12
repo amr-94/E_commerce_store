@@ -2,19 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Pest\Support\Str;
 
 class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['store_id', 'category_id', 'slug', 'name', 'description', 'image', 'price', 'compare_price', 'optins',
-     'rating', 'featured', 'status', 'user_id'];
+    protected $fillable = [
+        'store_id', 'category_id', 'slug', 'name', 'description', 'image', 'price', 'compare_price', 'optins',
+        'rating', 'featured', 'status', 'user_id'
+    ];
 
     /**
      * Get the user associated with the Product
@@ -70,5 +73,36 @@ class Product extends Model
 
 
         );
+    }
+
+    public function scopeFiltter(Builder $builder, $fillters)
+    {
+        $options = array_merge([
+            'store_id' => null,
+            'category_id' => null,
+            'tag_id' => null,
+            'status' => 'active'
+        ], $fillters);
+        $builder->when($options['store_id'], function ($builder, $value) {
+            $builder->where('store_id', '=', $value);
+        });
+        $builder->when($options['category_id'], function ($builder, $value) {
+            $builder->where('category_id', '=', $value);
+        });
+        $builder->when($options['tag_id'], function ($builder, $value) {
+            $builder->wherehas('tags', function ($builder, $value) {
+                $builder->whereIn('tags.id', $value);
+            });
+        });
+        $builder->when($options['status'], function ($builder, $value) {
+            $builder->where('status', '=', $value);
+        });
+    }
+
+    protected static function booted()
+    {
+        static::creating(function (Product $product) {
+            $product->slug = Str::slug($product->name);
+        });
     }
 }

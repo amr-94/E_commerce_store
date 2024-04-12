@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 //     echo "webhook called successfully" ;
 // });
 Route::resource('cart', CartController::class)->middleware('auth');
-Route::get('/delete-cart-product/{id}', [CartController::class, 'deleteProduct'])->name('delete.cart.product');
+// Route::get('/delete-cart-product/{id}', [CartController::class, 'destroy'])->name('delete.cart.product');
 
 
 require __DIR__ . '/auth.php';

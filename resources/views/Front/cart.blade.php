@@ -79,7 +79,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-1 col-md-2 col-12">
-                                <a class="remove-item" href="{{ route('cart.destroy', $items->product->id) }}"><i
+                                <a class="remove-item" href="{{ route('delete.cart.product', $items->product->id) }}"><i
                                         class="lni lni-close"></i></a>
                             </div>
                         </div>

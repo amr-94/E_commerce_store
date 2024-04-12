@@ -26,7 +26,7 @@ class CartModelRepo implements CartRepo
         if (!$item) {
             return  $cart = Cart::create([
                 'cookie_id' => $this->getCookieId(),
-                'user_id' => Auth::user()->id,
+                'user_id' => Auth::id(),
                 'product_id' => $product->id,
                 'quantity' => $quantity
             ]);
