@@ -11,6 +11,10 @@ use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      */

@@ -1,22 +1,7 @@
-{{-- @if ($errors->any())
-    <div class="alert alert-danger">
-        <h3>
-            error occured
-        </h3>
-        <ul>
-            @foreach ($errors->all() as $errors)
-                <li>{{ $errors }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif --}}
-{{-- ------------- component اول طريقة ل استدعاء الكومبوننت------------- --}}
-{{-- @component('components.errors')
-@endcomponent --}}
-{{-- ------------- errors directly component تانى طريقة ل استدعاء الكومبوننت----------- --}}
+{{-- Call Error component --}}
 <x-errors />
 
-{{-- -------------------------- عرض الايرورز كلها ---------- --}}
+{{-- -------------------------- Show Errors ---------- --}}
 
 <div class="form-group">
     <label for="">Category Name</label>
@@ -31,7 +16,6 @@
     <select type="text" name="parent_id" class="form-control form-select">
         <option value="">primary category</option>
         {{-- ------------------------------------------------------
-                دى طريقة
                 @foreach ($categories as $categories)
                     <option value="{{ $categories->id }}"
                         @if ($categories->id == $category->parent_id) selected @endif>

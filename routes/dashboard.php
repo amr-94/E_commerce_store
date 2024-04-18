@@ -7,7 +7,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'middleware' => ['auth', 'admin'],
+    'middleware' => ['auth'],
     'prefix' => 'dashboard/'
 ], function () {
     Route::get('/', [DashboardController::class, 'index'])
