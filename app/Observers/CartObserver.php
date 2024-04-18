@@ -12,7 +12,6 @@ class CartObserver
      */
     public function creating(cart $cart): void
     {
-        // هنا بعرفه لما يحصل انشاء فى الجدول بتاع الكارت يعمل ايه مثلا ف الاى دى
         $cart->id = str::uuid();
     }
 

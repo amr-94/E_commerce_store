@@ -9,12 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Store extends Model
 {
     use HasFactory;
-    //لو كنت عامل الجدول بصيغة الجمع مثلا
-    // protected $table = 'stores';
-    // علشان اعرف الجدول الخاص بالموديل دا
-    // ------------------------------------------
-    // protected $primaryKey = 'id';
-    // هنا مثلا لو كنت مغير ال برايمرى كى ل الاسم مثلا او اى حاجة تانى
 
     /**
      * Get all of the comments for the Store
@@ -25,6 +19,4 @@ class Store extends Model
     {
         return $this->hasMany(Product::class, 'product_id', 'id');
     }
-
-
 }

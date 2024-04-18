@@ -17,9 +17,7 @@ class Category extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = ['name', 'image', 'status', 'description', 'parent_id', 'slug'];
-    // عكسها
-    //protected $guarded =[]
-    // هنا بحط الحاجة اللى مش عايزها تتضاف
+
     /**
      * Get the user associated with the Category
      *
@@ -36,7 +34,7 @@ class Category extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(category::class, 'parent_id', 'id')->withDefault([
-             'no parent'
+            'no parent'
         ]);
     }
 
@@ -61,6 +59,6 @@ class Category extends Model
     public function products(): HasMany
     {
         // return $this->hasMany(Product::class); //دا لو ملتزم ب الكى الافتراضية
-        return $this->hasMany(Product::class,'category_id','id');
+        return $this->hasMany(Product::class, 'category_id', 'id');
     }
 }

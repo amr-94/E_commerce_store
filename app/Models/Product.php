@@ -61,12 +61,12 @@ class Product extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(
-            Tag::class, // الجدول الوسيط related model
-            'product_tag', //اسم الجدول الوسيط, pivot table name
-            'product_id', // دا ال فورين كى بتاع الجدول اللى انا فيه حاليا FK in pivot table for current model
-            'tag_id', // الفورن كى بتاع الجدول التانى FK in pivot table for related model
-            'id', // pk current model
-            'id' // pk related model
+            Tag::class,
+            'product_tag',
+            'product_id',
+            'tag_id',
+            'id',
+            'id'
 
 
 

@@ -28,9 +28,9 @@ class CategoriesController extends Controller
             $query->where('status', $status);
         }
         // $categories = $query->withTrashed()->paginate(10);
-                 $categories = $query->paginate(10);
+        $categories = $query->paginate(10);
 
-        // ------------ استدعاء الاسكوب اللى ف الموديل
+        // ------------
         // $categories =  Category::active()->paginate(1);
         // $categories =  Category::inactive()->paginate(1);
         // -------------------------------------------
@@ -67,7 +67,6 @@ class CategoriesController extends Controller
             $request->merge(
                 [
                     'image' => $filename,
-                    //  لازم اسم ال ايمدج يختلف عن الاسم اللى ف الريكويست لما اعمل ميرج
 
                 ]
             );
@@ -106,7 +105,7 @@ class CategoriesController extends Controller
 
         $category = Category::findOrFail($id);
         $products = $category->products()->with('store')->paginate(5);
-        return view('dashboard.categories.show', compact('products','category'));
+        return view('dashboard.categories.show', compact('products', 'category'));
     }
 
     /**
@@ -133,7 +132,6 @@ class CategoriesController extends Controller
             $filename = time() . '.' . $request->img->extension();
             //---------------------------------
             // $filename = $request->img->getClientOriginalName() . '.' . $request->img->extension();
-            // دا لو حابب احفظهاه بنفس الاسم اللى اترفعت بيه
             //---------------------------------------
             $request->img->move(public_path('/categories'), $filename);
             $request->merge([
@@ -157,7 +155,6 @@ class CategoriesController extends Controller
         $category->delete($id);
         // -------------------
         // Category::destroy($id);
-        // دى طريقة تانى للحذف بشكل مباشرر
         return redirect(route('categories.index'))->with('success', "category $category->name deleted");
     }
 

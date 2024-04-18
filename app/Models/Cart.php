@@ -14,85 +14,44 @@ class Cart extends Model
     protected $fillable = ['cookie_id', 'user_id', 'product_id', 'quantity'];
 
 
-   protected static function booted()
-     {
-        //هنا بحددله فى حالة حدوذ حدث مثلا يعمل ايه
-        // يعنى ممكن مثلا اقوله لما يحصل حذف ف جدول مثلا يبقى تحدف الصورة بتاعته
-    //     static::creating(function (Cart $cart) {
-    //         $cart->id = Str::uuid();
-    //     });
+    protected static function booted()
+    {
 
-            static::observe(CartObserver::class);
-            // واستدعيها هنا
-     }
+
+        static::observe(CartObserver::class);
+    }
 
 
 
 
-     /**
-      * Get the user that owns the Cart
-      *
-      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-      */
-     public function user(): BelongsTo
-     {
-         return $this->belongsTo(User::class);
-     }
+    /**
+     * Get the user that owns the Cart
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
 
-     /**
-      * Get the products that owns the Cart
-      *
-      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-      */
+    /**
+     * Get the products that owns the Cart
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
 
-     public function product(): BelongsTo
-     {
-         return $this->belongsTo(Product::class);
-     }
-
-
-
-     /**
-      * Get the user that owns the Cart
-      *
-      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-      */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Get the user that owns the Cart
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
 }
