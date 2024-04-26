@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\front\CartController;
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -42,8 +43,9 @@ Route::middleware('auth')->group(function () {
 //     echo "webhook called successfully" ;
 // });
 Route::resource('cart', CartController::class)->middleware('auth');
-// Route::get('/delete-cart-product/{id}', [CartController::class, 'destroy'])->name('delete.cart.product');
+Route::get('/delete-cart-product/{id}', [CartController::class, 'destroy'])->name('delete.cart.product');
 
-
+Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
+Route::post('checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
 require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';

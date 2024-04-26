@@ -11,28 +11,34 @@ use Illuminate\Support\Str;
 
 class CartModelRepo implements CartRepo
 {
+
     public function get(): Collection
     {
         return Cart::with('product')->where('user_id', Auth::user()->id)
             ->where('cookie_id', '=', $this->getCookieId())->get();
-        dd($this->get());
+        // dd($this->get());
     }
 
     public function add(Product $product, $quantity = 1)
     {
 
-        $item = Cart::where('product_id', '=', $product->id)
-            ->orWhere('user_id', Auth::user()->id)->first();
-        if (!$item) {
-            return  $cart = Cart::create([
-                'cookie_id' => $this->getCookieId(),
-                'user_id' => Auth::id(),
-                'product_id' => $product->id,
-                'quantity' => $quantity
-            ]);
-            $this->get()->push($cart);
+        $item =  Cart::where([
+            'cookie_id' => $this->getCookieId(),
+            'product_id' => $product->id,
+            'user_id' => Auth::user()->id
+        ])->first();
+        if ($item) {
+            $item->increment('quantity', $quantity);
+            return $item;
         }
-        return $item->increment('quantity', $quantity);
+
+        return Cart::create([
+            'id' => Str::uuid(),
+            'cookie_id' => $this->getCookieId(),
+            'product_id' => $product->id,
+            'quantity' => $quantity,
+            'user_id' => Auth::id(),
+        ]);
     }
     public function update(Product $product, $quantity)
     {
@@ -50,7 +56,7 @@ class CartModelRepo implements CartRepo
 
     public function empty()
     {
-        cart::where('cookie_id')->destroy();
+        cart::where('cookie_id', $this->getCookieId())->delete();
     }
     public function total(): float
     {
