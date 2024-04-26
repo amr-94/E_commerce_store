@@ -70,7 +70,7 @@ class Order extends Model
             Carbon::now()->year;
         $number =  Order::whereYear('created_at', $year)->max('number');
         if ($number) {
-            return  $number++;
+            return  $number + 1;
         } else {
             return $number = '0001';
         }
