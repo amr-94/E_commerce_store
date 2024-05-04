@@ -14,8 +14,8 @@ class CartServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(CartRepo::class,function(){
-            return New CartModelRepo();
+        $this->app->bind(CartRepo::class, function () {
+            return new CartModelRepo();
         });
     }
 

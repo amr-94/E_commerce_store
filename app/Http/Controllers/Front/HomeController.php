@@ -13,12 +13,10 @@ class HomeController extends Controller
     //
     public function index()
     {
-        $products = Product::where('status', 'active')->with('category')->latest()->limit(5)->get();
+        $products = Product::where('status', 'active')->with('category')->latest()->limit(10)->get();
         // if($products->compare_price){
         //     $p_compare = 100 - (100 * $products->price / $products->compare_price);
         // }
         return view("Front.home", compact("products"));
     }
-
-
 }
