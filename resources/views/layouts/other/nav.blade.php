@@ -77,7 +77,7 @@
                      <div class="media">
                          <img
                              src="{{ asset('dist/img/user8-128x128.jpg" alt="User Avatar"
-                                                                                                                                                                                                                                                                                                                                                  class="img-size-50 img-circle mr-3') }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              class="img-size-50 img-circle mr-3') }}">
                          <div class="media-body">
                              <h3 class="dropdown-item-title">
                                  John Pierce
@@ -95,7 +95,7 @@
                      <div class="media">
                          <img
                              src="{{ asset('dist/img/user3-128x128.jpg" alt="User Avatar"
-                                                                                                                                                                                                                                                                                                                                                  class="img-size-50 img-circle mr-3') }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              class="img-size-50 img-circle mr-3') }}">
                          <div class="media-body">
                              <h3 class="dropdown-item-title">
                                  Nora Silvester
@@ -115,25 +115,18 @@
          <li class="nav-item dropdown">
              <a class="nav-link" data-toggle="dropdown" href="#">
                  <i class="far fa-bell"></i>
-                 <span class="badge badge-warning navbar-badge">15</span>
+                 <span class="badge badge-warning navbar-badge">{{ Auth::user()->unreadnotifications->count() }}</span>
              </a>
              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                 <span class="dropdown-header">15 Notifications</span>
-                 <div class="dropdown-divider"></div>
-                 <a href="#" class="dropdown-item">
-                     <i class="fas fa-envelope mr-2"></i> 4 new messages
-                     <span class="float-right text-muted text-sm">3 mins</span>
-                 </a>
-                 <div class="dropdown-divider"></div>
-                 <a href="#" class="dropdown-item">
-                     <i class="fas fa-users mr-2"></i> 8 friend requests
-                     <span class="float-right text-muted text-sm">12 hours</span>
-                 </a>
-                 <div class="dropdown-divider"></div>
-                 <a href="#" class="dropdown-item">
-                     <i class="fas fa-file mr-2"></i> 3 new reports
-                     <span class="float-right text-muted text-sm">2 days</span>
-                 </a>
+                 <span class="dropdown-header">{{ Auth::user()->unreadnotifications->count() }}</span>
+                 @foreach (Auth::user()->unreadnotifications as $notify)
+                     <div class="dropdown-divider"></div>
+                     <a href="{{ route('notify.read', $notify->id) }}" class="dropdown-item">
+                         <i class="fas fa-envelope mr-2"></i> {{ $notify->data['body'] }}
+                         <span class="float-right text-muted text-sm">{{ $notify->created_at->diffForhumans() }}</span>
+                     </a>
+                 @endforeach
+
                  <div class="dropdown-divider"></div>
                  <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
              </div>

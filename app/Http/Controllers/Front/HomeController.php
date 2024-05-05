@@ -19,4 +19,12 @@ class HomeController extends Controller
         // }
         return view("Front.home", compact("products"));
     }
+
+
+    public function markasread($id)
+    {
+        $user = Auth::user();
+        $user->unreadNotifications->where('id', $id)->markAsRead();
+        return redirect()->back();
+    }
 }

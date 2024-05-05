@@ -55,15 +55,16 @@
                                 </li>
                                 <li>
                                     <div class="select-position">
-                                        <select id="select5">
-                                            <option value="0" selected>English</option>
-                                            <option value="1">Español</option>
-                                            <option value="2">Filipino</option>
-                                            <option value="3">Français</option>
-                                            <option value="4">العربية</option>
-                                            <option value="5">हिन्दी</option>
-                                            <option value="6">বাংলা</option>
-                                        </select>
+                                        <ul id="select5">
+                                            @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                <li>
+                                                    <a rel="alternate" hreflang="{{ $localeCode }}"
+                                                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                        {{ $properties['native'] }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
                                 </li>
                             </ul>
@@ -72,7 +73,7 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="{{ route('home') }}">Home</a></li>
+                                <li><a href="{{ route('home') }}">@lang('main.Home')</a></li>
                                 <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="contact.html">Contact Us</a></li>
                             </ul>
@@ -80,8 +81,8 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            <div class="user">
-                                @auth
+                            @auth
+                                <div class="user">
 
                                     <img src="{{ asset('profile/' . Auth::user()->profile->profile_image) }}"
                                         alt="Generic placeholder image"
@@ -90,9 +91,20 @@
                                     <a href="{{ route('profile.edit', Auth::user()->id) }}"> Hello
                                         {{ Auth::user()->name }}
                                     </a>
-                                @endauth
 
-                            </div>
+
+                                </div>
+                                <div class="user">
+
+
+                                    <a href="{{ route('dashboard') }}" style="color: rgb(248, 175, 175)"> dashboard
+
+                                    </a>
+
+
+                                </div>
+                            @endauth
+
                             <ul class="user-login">
                                 @guest
 

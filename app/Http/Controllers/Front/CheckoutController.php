@@ -6,6 +6,7 @@ use App\Events\OrderCreate;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Notifications\OrederCreatedNotification;
 use App\Repo\Cart\CartRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

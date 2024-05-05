@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,32 +20,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('ld', [HomeController::class, 'cart_shop'])->name('cart_shop');
-Route::get('/products', [ProductController::class, 'index'])->name('front.products.index');
-Route::get('products/{slug}', [ProductController::class, 'show'])->name('front.products.show');
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ],
+    function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('ld', [HomeController::class, 'cart_shop'])->name('cart_shop');
+        Route::get('/products', [ProductController::class, 'index'])->name('front.products.index');
+        Route::get('products/{slug}', [ProductController::class, 'show'])->name('front.products.show');
+        // Route::get('/dashboard', function () {
+        //     return view('dashboard');
+        // })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get('dash', function () {
-//     return view('dashboard');
+        // Route::get('dash', function () {
+        //     return view('dashboard');
 
-// })->middleware('auth');
+        // })->middleware('auth');
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-// Route::post('/paypal/webhook', function () {
-//     echo "webhook called successfully" ;
-// });
-Route::resource('cart', CartController::class)->middleware('auth');
-Route::get('/delete-cart-product/{id}', [CartController::class, 'destroy'])->name('delete.cart.product');
+        Route::middleware('auth',)->group(function () {
+            Route::get('notify/{id}', [HomeController::class, 'markasread'])->name('notify.read');
+            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+            Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        });
+        // Route::post('/paypal/webhook', function () {
+        //     echo "webhook called successfully" ;
+        // });
+        Route::resource('cart', CartController::class)->middleware('auth');
+        Route::get('/delete-cart-product/{id}', [CartController::class, 'destroy'])->name('delete.cart.product');
 
-Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
-Route::post('checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+        Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
+        Route::post('checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+    }
+);
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';
