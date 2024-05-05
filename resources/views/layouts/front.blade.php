@@ -88,7 +88,7 @@
                                         alt="Generic placeholder image"
                                         class="img-fluid rounded-circle border border-dark border-3" style="width: 70px;">
 
-                                    <a href="{{ route('profile.edit', Auth::user()->id) }}"> Hello
+                                    <a href="{{ route('profile.edit', Auth::user()->id) }}">@lang('main.Hello')
                                         {{ Auth::user()->name }}
                                     </a>
 
@@ -97,7 +97,7 @@
                                 <div class="user">
 
 
-                                    <a href="{{ route('dashboard') }}" style="color: rgb(248, 175, 175)"> dashboard
+                                    <a href="{{ route('dashboard') }}" style="color: rgb(248, 175, 175)"> @lang('main.dashboard')
 
                                     </a>
 
