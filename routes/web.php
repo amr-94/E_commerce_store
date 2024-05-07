@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\Auth\TwoFactorController;
 use App\Http\Controllers\front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
@@ -30,16 +31,7 @@ Route::group(
         Route::get('ld', [HomeController::class, 'cart_shop'])->name('cart_shop');
         Route::get('/products', [ProductController::class, 'index'])->name('front.products.index');
         Route::get('products/{slug}', [ProductController::class, 'show'])->name('front.products.show');
-        // Route::get('/dashboard', function () {
-        //     return view('dashboard');
-        // })->middleware(['auth', 'verified'])->name('dashboard');
-
-        // Route::get('dash', function () {
-        //     return view('dashboard');
-
-        // })->middleware('auth');
-
-
+        Route::get('Auth/2FA', [TwoFactorController::class, 'index'])->name('2FA');
         Route::middleware('auth',)->group(function () {
             Route::get('notify/{id}', [HomeController::class, 'markasread'])->name('notify.read');
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -57,5 +49,5 @@ Route::group(
     }
 );
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';
