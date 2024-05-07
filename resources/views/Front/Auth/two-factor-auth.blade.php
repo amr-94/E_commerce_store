@@ -18,7 +18,7 @@
                         @endif
                         @if (!$user->two_factor_secret)
                             <button class="btn" type="submit">
-                                enabel
+                                Enable
                             </button>
                         @else
                             {!! $user->twoFactorQrCodeSvg() !!}

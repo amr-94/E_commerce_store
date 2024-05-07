@@ -47,14 +47,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">@auth
-
+                        <a href="#" class="d-block">
+                            @auth
                                 <a href="{{ route('profile.edit') }}"> {{ Auth::user()->name }}</a>
-                                <form action="{{ route('logout') }}" method="post">
-                                    @csrf
-                                    {{-- <a  href="{{route('logout')}}">logout</a> --}}
-                                    <button type="submit" class="btn btn-sm btn-outline-primary">logout</button>
-                                </form>
+                                <div class="d-flex justify-content-sm-end">
+
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        {{-- <a  href="{{route('logout')}}">logout</a> --}}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">logout</button>
+                                    </form>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary "><a
+                                            href="{{ route('2FA') }}"> Enable/disable 2FA</a>
+                                    </button>
+                                </div>
+
                             @endauth
                         </a>
                     </div>

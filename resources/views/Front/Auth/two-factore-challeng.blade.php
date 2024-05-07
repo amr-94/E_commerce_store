@@ -6,7 +6,7 @@
                     @csrf
                     <div class="card-body">
                         <div class="title">
-                            <h3>Challinge</h3>
+                            <h3>Challenge</h3>
                             <p>Enter Qr code</p>
                         </div>
                     </div>
