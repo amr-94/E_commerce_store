@@ -60,9 +60,10 @@ class CheckoutController extends Controller
                 }
             }
             // $cart->empty(); will move it to listienr
+            event(new OrderCreate($order));
+
             DB::commit();
             // event('order_created', $order, $cart);
-            event(new OrderCreate($order));
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;

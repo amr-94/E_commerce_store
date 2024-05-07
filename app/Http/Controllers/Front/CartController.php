@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\front;
+namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use App\Models\Product;
-use App\Repo\Cart\CartModelRepo;
 use App\Repo\Cart\CartRepo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
+
 
 class CartController extends Controller
 {

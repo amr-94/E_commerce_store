@@ -121,7 +121,7 @@
                                     </ul>
                                     <div class="button">
                                         <a href="{{ route('checkout') }}" class="btn">Checkout</a>
-                                        <a href="product-grids.html" class="btn btn-alt">Continue
+                                        <a href="{{ route('home') }}" class="btn btn-alt">Continue
                                             shopping</a>
                                     </div>
                                 </div>

@@ -123,10 +123,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="single-form button">
-                                                    <button class="btn" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseFour" aria-expanded="false"
-                                                        aria-controls="collapseFour">next
-                                                        step</button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -269,11 +266,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="steps-form-btn button">
-                                                    <button class="btn" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseThree" aria-expanded="false"
-                                                        aria-controls="collapseThree">previous</button>
-                                                    <a href="javascript:void(0)" class="btn btn-alt">Save &
-                                                        Continue</a>
+
                                                 </div>
                                             </div>
                                         </div>

@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -27,7 +26,7 @@ class OrederCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database', 'broadcast'];
+        return ['database', 'broadcast', 'mail'];
     }
 
     /**
@@ -54,7 +53,6 @@ class OrederCreatedNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         $adder = $this->order->billingAdress;
-
         return [
             'body' => "A New order (#{$this->order->number}) created by {$adder->first_name}",
             'url' => url('/dashboard'),
@@ -62,6 +60,20 @@ class OrederCreatedNotification extends Notification
             'order_id' => $this->order->id,
         ];
     }
+
+    public function toBroadcast(object $notifiable): array
+    {
+        $adder = $this->order->billingAdress;
+        return  [
+            'body' => "A New order (#{$this->order->number}) created by {$adder->first_name}",
+            'url' => url('/dashboard'),
+            // 'order_user' => route('/'),
+            'order_id' => $this->order->id,
+        ];
+    }
+
+
+
     public function toArray(object $notifiable): array
     {
         $adder = $this->order->billingAdress;
