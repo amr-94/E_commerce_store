@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use Pest\Support\Str;
 
 class ProductController extends Controller
 {
@@ -17,7 +15,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
-        return Product::Filtter($request->query())->paginate();
+        return Product::paginate();
     }
 
     /**
@@ -41,10 +39,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
-
-
-
+        $product = product::findOrFail($id);
+        return $product;
     }
 
     /**
@@ -71,7 +67,7 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
-        $product = product::find($id);
+        $product = product::findOrFail($id);
         $product->delete($id);
         return $product;
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\Front\Auth\TwoFactorController;
 use App\Http\Controllers\front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
@@ -47,7 +48,10 @@ Route::group(
         Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
         Route::post('checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
     }
+
 );
+Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('auth.redirect');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('auth.callback');
 
 // require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';
