@@ -21,6 +21,10 @@
          <li class="nav-item d-none d-sm-inline-block">
              <a href="{{ route('categories.index') }}" class="nav-link">Categories</a>
          </li>
+
+         <li class="nav-item d-none d-sm-inline-block">
+             <a href="{{ route('home') }}" class="nav-link">Front page </a>
+         </li>
      </ul>
 
      <!-- Right navbar links -->
@@ -77,7 +81,7 @@
                      <div class="media">
                          <img
                              src="{{ asset('dist/img/user8-128x128.jpg" alt="User Avatar"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              class="img-size-50 img-circle mr-3') }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           class="img-size-50 img-circle mr-3') }}">
                          <div class="media-body">
                              <h3 class="dropdown-item-title">
                                  John Pierce
@@ -95,7 +99,7 @@
                      <div class="media">
                          <img
                              src="{{ asset('dist/img/user3-128x128.jpg" alt="User Avatar"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              class="img-size-50 img-circle mr-3') }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           class="img-size-50 img-circle mr-3') }}">
                          <div class="media-body">
                              <h3 class="dropdown-item-title">
                                  Nora Silvester
@@ -123,7 +127,8 @@
                      <div class="dropdown-divider"></div>
                      <a href="{{ route('notify.read', $notify->id) }}" class="dropdown-item">
                          <i class="fas fa-envelope mr-2"></i> {{ $notify->data['body'] }}
-                         <span class="float-right text-muted text-sm">{{ $notify->created_at->diffForhumans() }}</span>
+                         <span
+                             class="float-right text-muted text-sm">{{ $notify->created_at->diffForhumans() }}</span>
                      </a>
                  @endforeach
 

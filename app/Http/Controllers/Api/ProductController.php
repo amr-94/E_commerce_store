@@ -68,7 +68,7 @@ class ProductController extends Controller
     {
         //
         $product = product::findOrFail($id);
-        $product->delete($id);
+        $product->delete();
         return $product;
     }
 }

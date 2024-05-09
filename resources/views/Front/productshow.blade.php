@@ -46,12 +46,6 @@
                                     href="javascript:void(0)">{{ $product->category->name }}</a></p>
                             <h3 class="price">${{ $product->price }}<span>${{ $product->compare_price }}</span></h3>
                             <p class="info-text">{{ $product->description }}</p>
-
-
-
-
-
-
                             <form action="{{ route('cart.store') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">

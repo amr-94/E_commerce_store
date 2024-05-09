@@ -26,7 +26,9 @@ class User extends Authenticatable
         'password',
         'last_active_at',
         'phone_number',
-        'google_id'
+        'google_id',
+        'facebook_id',
+
 
 
     ];

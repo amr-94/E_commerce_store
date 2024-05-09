@@ -1,2 +1,8 @@
 <?php
-return [];
+return [
+    'Home' => 'Home',
+    'Hello' => 'Hello',
+    'dashboard' => 'Dashboard'
+
+
+];

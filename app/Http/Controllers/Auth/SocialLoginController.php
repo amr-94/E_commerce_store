@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 
 class SocialLoginController extends Controller
 {
+
     public function redirect($provider)
     {
         return Socialite::driver($provider)->redirect();
@@ -21,7 +22,7 @@ class SocialLoginController extends Controller
         $user = Socialite::driver($provider)->stateless()->user();
 
         // dd($user);
-        $existingUser = User::where('google_id', $user->id)->first();
+        $existingUser = User::whereAny(['google_id', 'facebook_id'], $user->id)->first();
 
         if ($existingUser) {
             // Log in the existing user.

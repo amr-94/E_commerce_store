@@ -40,8 +40,8 @@
                 <div class="row align-items-center">
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-left">
-                            <ul class="menu-top-link">
-                                <li>
+                            {{-- <ul class="menu-top-link"> --}}
+                            {{-- <li>
                                     <div class="select-position">
                                         <select id="select4">
                                             <option value="0" selected>$ USD</option>
@@ -52,30 +52,28 @@
                                             <option value="5">৳ BDT</option>
                                         </select>
                                     </div>
-                                </li>
-                                <li>
-                                    <div class="select-position">
-                                        <ul id="select5">
-                                            @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                <li>
-                                                    <a rel="alternate" hreflang="{{ $localeCode }}"
-                                                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                                        {{ $properties['native'] }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </li>
+                                </li> --}}
+                            {{-- <div class="select-position"> --}}
+                            <ul id="menu-top-link">
+                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                    <li>
+                                        <a rel="alternate" hreflang="{{ $localeCode }}"
+                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            {{ $properties['native'] }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
+                            {{-- </div> --}}
+                            {{-- </ul> --}}
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
                                 <li><a href="{{ route('home') }}">@lang('main.Home')</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                {{-- <li><a href="about-us.html">About Us</a></li>
+                                <li><a href="contact.html">Contact Us</a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -138,26 +136,29 @@
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
                             <!-- navbar search start -->
-                            <div class="navbar-search search-style-5">
-                                <div class="search-select">
-                                    <div class="select-position">
-                                        <select id="select1">
-                                            <option selected>All</option>
-                                            <option value="1">option 01</option>
-                                            <option value="2">option 02</option>
-                                            <option value="3">option 03</option>
-                                            <option value="4">option 04</option>
-                                            <option value="5">option 05</option>
-                                        </select>
+                            <form action="{{ route('front.products.index') }}" method="get">
+                                <div class="navbar-search search-style-5">
+                                    <div class="search-select">
+                                        <div class="select-position">
+                                            <select id="select1" name="category_id">
+                                                @php
+                                                    $categories = App\Models\Category::all();
+                                                @endphp
+                                                <option selected>All</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="search-input">
+                                        <input type="text" placeholder="Search" name="name">
+                                    </div>
+                                    <div class="search-btn">
+                                        <button type="submit"><i class="lni lni-search" alt="search"></i></button>
                                     </div>
                                 </div>
-                                <div class="search-input">
-                                    <input type="text" placeholder="Search">
-                                </div>
-                                <div class="search-btn">
-                                    <button><i class="lni lni-search)}}-alt"></i></button>
-                                </div>
-                            </div>
+                            </form>
                             <!-- navbar search Ends -->
                         </div>
                         <!-- End Main Menu Search -->
@@ -167,7 +168,10 @@
                             <div class="nav-hotline">
                                 <i class="lni lni-phone"></i>
                                 <h3>Hotline:
-                                    <span>(+100) 123 456 7890</span>
+                                    @php
+                                        $user = App\Models\User::where('type', 'admin')->first();
+                                    @endphp
+                                    <span>{{ $user->phone_number }}</span>
                                 </h3>
                             </div>
                             <div class="navbar-cart">
@@ -196,33 +200,17 @@
                     <div class="nav-inner">
                         <!-- Start Mega Category Menu -->
                         <div class="mega-category-menu">
+                            @php
+                                $categories = App\Models\Category::all();
+                            @endphp
                             <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>
                             <ul class="sub-category">
-                                <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
-                                    <ul class="inner-sub-category">
-                                        <li><a href="product-grids.html">Digital Cameras</a></li>
-                                        <li><a href="product-grids.html">Camcorders</a></li>
-                                        <li><a href="product-grids.html">Camera Drones</a></li>
-                                        <li><a href="product-grids.html">Smart Watches</a></li>
-                                        <li><a href="product-grids.html">Headphones</a></li>
-                                        <li><a href="product-grids.html">MP3 Players</a></li>
-                                        <li><a href="product-grids.html">Microphones</a></li>
-                                        <li><a href="product-grids.html">Chargers</a></li>
-                                        <li><a href="product-grids.html">Batteries</a></li>
-                                        <li><a href="product-grids.html">Cables & Adapters</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="product-grids.html">accessories</a></li>
-                                <li><a href="product-grids.html">Televisions</a></li>
-                                <li><a href="product-grids.html">best selling</a></li>
-                                <li><a href="product-grids.html">top 100 offer</a></li>
-                                <li><a href="product-grids.html">sunglass</a></li>
-                                <li><a href="product-grids.html">watch</a></li>
-                                <li><a href="product-grids.html">man’s product</a></li>
-                                <li><a href="product-grids.html">Home Audio & Theater</a></li>
-                                <li><a href="product-grids.html">Computers & Tablets </a></li>
-                                <li><a href="product-grids.html">Video Games </a></li>
-                                <li><a href="product-grids.html">Home Appliances </a></li>
+                                @foreach ($categories as $category)
+                                    <li><a
+                                            href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                         <!-- End Mega Category Menu -->
@@ -240,7 +228,7 @@
                                     <li class="nav-item">
                                         <a href="index.html" aria-label="Toggle navigation">Home</a>
                                     </li>
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a class="dd-menu active collapsed" href="javascript:void(0)"
                                             data-bs-toggle="collapse" data-bs-target="#submenu-1-2"
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -253,8 +241,8 @@
                                             <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
                                             <li class="nav-item"><a href="404.html">404 Error</a></li>
                                         </ul>
-                                    </li>
-                                    <li class="nav-item">
+                                    </li> --}}
+                                    {{-- <li class="nav-item">
                                         <a class="dd-menu collapsed" href="javascript:void(0)"
                                             data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -283,7 +271,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="contact.html" aria-label="Toggle navigation">Contact Us</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div> <!-- navbar collapse -->
                         </nav>
@@ -352,22 +340,6 @@
                                 <a href="index.html">
                                     <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="#">
                                 </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-8 col-12">
-                            <div class="footer-newsletter">
-                                <h4 class="title">
-                                    Subscribe to our Newsletter
-                                    <span>Get all the latest information, Sales and Offers.</span>
-                                </h4>
-                                <div class="newsletter-form-head">
-                                    <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="Email address here..." type="email">
-                                        <div class="button">
-                                            <button class="btn">Subscribe<span class="dir-part"></span></button>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>

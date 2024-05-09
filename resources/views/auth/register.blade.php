@@ -49,8 +49,10 @@
             </x-primary-button>
         </div>
         <x-danger-button class="ms-4">
-            <a href="{{ route('auth.redirect', 'google') }}">googel</a>
-
+            <a href="{{ route('auth.redirect', 'google') }}">Googel</a>
         </x-danger-button>
+        <x-primary-button class="ms-4">
+            <a href="{{ route('auth.redirect', 'facebook') }}">Facebook</a>
+        </x-primary-button>
     </form>
 </x-guest-layout>

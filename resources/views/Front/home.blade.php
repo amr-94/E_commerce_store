@@ -8,82 +8,69 @@
                         <!-- Start Hero Slider -->
                         <div class="hero-slider">
                             <!-- Start Single Slider -->
-                            <div class="single-slider"
-                                style="background-image: url(https://via.placeholder.com/800x500);">
-                                <div class="content">
-                                    <h2><span>No restocking fee ($35
-                                            savings)</span>
-                                        M75 Sport Watch
-                                    </h2>
-                                    <p>Lorem ipsum dolor sit amet,
-                                        consectetur elit, sed do eiusmod
-                                        tempor incididunt ut
-                                        labore dolore magna aliqua.</p>
-                                    <h3><span>Now Only</span> $320.99</h3>
-                                    <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
+                            @foreach ($products as $product)
+                                <div class="single-slider" style="background-image: url({{ asset($product->image) }});">
+                                    <div class="content">
+                                        <h2><span>{{ $product->name }} (${{ $product->compare_price - $product->price }}
+                                                savings)</span>
+                                            {{ $product->name }}
+                                        </h2>
+                                        <p>{{ $product->description }}</p>
+                                        <h3><span>Now Only</span> $320.99</h3>
+                                        <div class="button">
+                                            <a href="{{ route('front.products.show', $product->slug) }}"
+                                                class="btn">Shop
+                                                Now</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
+
                             <!-- End Single Slider -->
-                            <!-- Start Single Slider -->
-                            <div class="single-slider"
-                                style="background-image: url(https://via.placeholder.com/800x500);">
-                                <div class="content">
-                                    <h2><span>Big Sale Offer</span>
-                                        Get the Best Deal on CCTV Camera
-                                    </h2>
-                                    <p>Lorem ipsum dolor sit amet,
-                                        consectetur elit, sed do eiusmod
-                                        tempor incididunt ut
-                                        labore dolore magna aliqua.</p>
-                                    <h3><span>Combo Only:</span>
-                                        $590.00</h3>
-                                    <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Slider -->
+
                         </div>
                         <!-- End Hero Slider -->
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
                     <div class="row">
-                        <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
-                            <!-- Start Small Banner -->
-                            <div class="hero-small-banner"
-                                style="background-image: url('https://via.placeholder.com/370x250');">
-                                <div class="content">
-                                    <h2>
-                                        <span>New line required</span>
-                                        iPhone 12 Pro Max
-                                    </h2>
-                                    <h3>$259.99</h3>
-                                </div>
-                            </div>
-                            <!-- End Small Banner -->
-                        </div>
-                        <div class="col-lg-12 col-md-6 col-12">
-                            <!-- Start Small Banner -->
-                            <div class="hero-small-banner style2">
-                                <div class="content">
-                                    <h2>Weekly Sale!</h2>
-                                    <p>Saving up to 50% off all online store
-                                        items this week.</p>
-                                    <div class="button">
-                                        <a class="btn" href="product-grids.html">Shop
-                                            Now</a>
+                        @php
+                            $newproducts = App\Models\Product::latest()->take(1)->get();
+                        @endphp
+                        <div class="row">
+                            <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
+                                <!-- Start Small Banner -->
+                                <div class="hero-small-banner"
+                                    style="background-image: url('https://via.placeholder.com/370x250');">
+                                    <div class="content">
+                                        <h2>
+                                            <span>New line required</span>
+                                            {{ $newproducts[0]->name }}
+                                        </h2>
+                                        <h3>{{ $newproducts[0]->price }}</h3>
                                     </div>
                                 </div>
+                                <!-- End Small Banner -->
                             </div>
-                            <!-- Start Small Banner -->
+                            <div class="col-lg-12 col-md-6 col-12">
+                                <!-- Start Small Banner -->
+                                <div class="hero-small-banner style2">
+                                    <div class="content">
+                                        <h2>Weekly Sale!</h2>
+                                        <p>Saving up to 50% off all online store
+                                            items this week.</p>
+                                        <div class="button">
+                                            <a class="btn" href="product-grids.html">Shop
+                                                Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Start Small Banner -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <!-- End Hero Area -->
 
@@ -169,105 +156,53 @@
                     </div>
                 </div>
             </div>
+            @php
+                $offerproduct = App\Models\Product::whereRaw('100 - (100 * price) / compare_price > ?', 50)
+                    ->where('status', 'active') //  additional condition
+                    ->orderBy('created_at', 'desc') //  ordering
+                    ->take(3)
+                    ->get();
+
+            @endphp
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-12">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-12">
-                            <!-- Start Single Product -->
-                            <div class="single-product">
-                                <div class="product-image">
-                                    <img src="{{ asset('https://via.placeholder.com/335x335') }}" alt="#">
-                                    <div class="button">
-                                        <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                            Add to
-                                            Cart</a>
+                        @foreach ($offerproduct as $product)
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <!-- Start Single Product -->
+                                <div class="single-product">
+                                    <div class="product-image">
+                                        <img src="{{ asset($product->image) }}" alt="#">
+                                        <div class="button">
+                                            <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                                Add to
+                                                Cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <span class="category">{{ $product->category->name }}</span>
+                                        <h4 class="title">
+                                            <a
+                                                href="{{ route('front.products.show', $product->slug) }}">{{ $product->name }}</a>
+                                        </h4>
+                                        <ul class="review">
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><span>{{ $product->rating }}</span></li>
+                                        </ul>
+                                        <div class="price">
+                                            <span>{{ $product->price }}</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="product-info">
-                                    <span class="category">Camera</span>
-                                    <h4 class="title">
-                                        <a href="product-grids.html">WiFi
-                                            Security Camera</a>
-                                    </h4>
-                                    <ul class="review">
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><span>5.0 Review(s)</span></li>
-                                    </ul>
-                                    <div class="price">
-                                        <span>$399.00</span>
-                                    </div>
-                                </div>
+                                <!-- End Single Product -->
                             </div>
-                            <!-- End Single Product -->
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-12">
-                            <!-- Start Single Product -->
-                            <div class="single-product">
-                                <div class="product-image">
-                                    <img src="{{ asset('https://via.placeholder.com/335x335') }}" alt="#">
-                                    <div class="button">
-                                        <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                            Add to
-                                            Cart</a>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <span class="category">Laptop</span>
-                                    <h4 class="title">
-                                        <a href="product-grids.html">Apple
-                                            MacBook Air</a>
-                                    </h4>
-                                    <ul class="review">
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><span>5.0 Review(s)</span></li>
-                                    </ul>
-                                    <div class="price">
-                                        <span>$899.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Product -->
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-12">
-                            <!-- Start Single Product -->
-                            <div class="single-product">
-                                <div class="product-image">
-                                    <img src="{{ asset('https://via.placeholder.com/335x335') }}" alt="#">
-                                    <div class="button">
-                                        <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                            Add to
-                                            Cart</a>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <span class="category">Speaker</span>
-                                    <h4 class="title">
-                                        <a href="product-grids.html">Bluetooth
-                                            Speaker</a>
-                                    </h4>
-                                    <ul class="review">
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star"></i></li>
-                                        <li><span>4.0 Review(s)</span></li>
-                                    </ul>
-                                    <div class="price">
-                                        <span>$70.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Product -->
-                        </div>
+                        @endforeach
+
+
                     </div>
                     <!-- Start Banner -->
                     <div class="single-banner right"
@@ -287,26 +222,31 @@
                     </div>
                     <!-- End Banner -->
                 </div>
+
                 <div class="col-lg-4 col-md-12 col-12">
                     <div class="offer-content">
                         <div class="image">
-                            <img src="{{ asset('https://via.placeholder.com/510x600') }}" alt="#">
+                            <img src="{{ asset($offerproduct[0]->image) }}" alt="#">
                             <span class="sale-tag">-50%</span>
                         </div>
+
                         <div class="text">
-                            <h2><a href="product-grids.html">Bluetooth
-                                    Headphone</a></h2>
+                            <h2><a
+                                    href="{{ route('front.products.show', $offerproduct[0]->slug) }}">{{ $offerproduct[0]->name }}</a>
+                            </h2>
                             <ul class="review">
                                 <li><i class="lni lni-star-filled"></i></li>
                                 <li><i class="lni lni-star-filled"></i></li>
                                 <li><i class="lni lni-star-filled"></i></li>
                                 <li><i class="lni lni-star-filled"></i></li>
                                 <li><i class="lni lni-star-filled"></i></li>
-                                <li><span>5.0 Review(s)</span></li>
+                                <li><span>{{ $offerproduct[0]->rating }}</span></li>
                             </ul>
                             <div class="price">
-                                <span>$200.00</span>
-                                <span class="discount-price">$400.00</span>
+                                <span>${{ $offerproduct[0]->price }}</span>
+                                <span class="discount-price">${{ $offerproduct[0]->compare_price }}</span>
+                                <span class="discount-price"> diss
+                                    {{ round(100 - (100 * $offerproduct[0]->price) / $offerproduct[0]->compare_price) }}%</span>
                             </div>
                             <p>Lorem Ipsum is simply dummy text of the
                                 printing and typesetting industry incididunt
@@ -353,7 +293,7 @@
                         <div class="list-image">
                             <a href="product-grids.html"><img
                                     src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ') }}  alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
@@ -364,140 +304,62 @@
                         </div>
                     </div>
                     <!-- End Single List -->
-                    <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
-                        </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">Puro Sound Labs
-                                    BT2200</a>
-                            </h3>
-                            <span>$95.00</span>
-                        </div>
-                    </div>
-                    <!-- End Single List -->
-                    <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
-                        </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">HP OfficeJet
-                                    Pro 8710</a>
-                            </h3>
-                            <span>$120.00</span>
-                        </div>
-                    </div>
-                    <!-- End Single List -->
+
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 custom-responsive-margin">
+                    @php
+                        $newarrivals = App\Models\Product::where('status', 'active')
+                            ->orderBy('created_at', 'desc')
+                            ->take(3)
+                            ->get();
+                    @endphp
                     <h4 class="list-title">New Arrivals</h4>
                     <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
+                    @foreach ($newarrivals as $newproduct)
+                        <div class="single-list">
+                            <div class="list-image">
+                                <a href="{{ route('front.products.show', $newproduct->slug) }}"><img
+                                        src="{{ $newproduct->image }}" alt="#"></a>
+                            </div>
+                            <div class="list-info">
+                                <h3>
+                                    <a
+                                        href="{{ route('front.products.show', $newproduct->slug) }}">{{ $newproduct->name }}</a>
+                                </h3>
+                                <span>{{ $newproduct->price }}</span>
+                            </div>
                         </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">iPhone X 256 GB
-                                    Space Gray</a>
-                            </h3>
-                            <span>$1150.00</span>
-                        </div>
-                    </div>
+                    @endforeach
+
                     <!-- End Single List -->
-                    <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
-                        </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">Canon EOS M50
-                                    Mirrorless Camera</a>
-                            </h3>
-                            <span>$950.00</span>
-                        </div>
-                    </div>
-                    <!-- End Single List -->
-                    <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
-                        </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">Microsoft Xbox
-                                    One S</a>
-                            </h3>
-                            <span>$298.00</span>
-                        </div>
-                    </div>
-                    <!-- End Single List -->
+
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <h4 class="list-title">Top Rated</h4>
+                    @php
+                        $toprated = App\Models\Product::where('status', 'active')
+                            ->orderBy('rating', 'desc')
+                            ->take(3)
+                            ->get();
+                    @endphp
                     <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
+                    @foreach ($toprated as $topproduct)
+                        <div class="single-list">
+                            <div class="list-image">
+                                <a href="{{ route('front.products.show', $topproduct->slug) }}"><img
+                                        src="{{ $topproduct->image }}" alt="#"></a>
+                            </div>
+                            <div class="list-info">
+                                <h3>
+                                    <a
+                                        href="{{ route('front.products.show', $topproduct->slug) }}">{{ $topproduct->name }}</a>
+                                </h3>
+                                <span>{{ $topproduct->price }}</span>
+                            </div>
                         </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">Samsung Gear
-                                    360 VR Camera</a>
-                            </h3>
-                            <span>$68.00</span>
-                        </div>
-                    </div>
+                    @endforeach
                     <!-- End Single List -->
-                    <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
-                        </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">Samsung Galaxy
-                                    S9+ 64 GB</a>
-                            </h3>
-                            <span>$840.00</span>
-                        </div>
-                    </div>
-                    <!-- End Single List -->
-                    <!-- Start Single List -->
-                    <div class="single-list">
-                        <div class="list-image">
-                            <a href="product-grids.html"><img
-                                    src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
-                        </div>
-                        <div class="list-info">
-                            <h3>
-                                <a href="product-grids.html">Zeus Bluetooth
-                                    Headphones</a>
-                            </h3>
-                            <span>$28.00</span>
-                        </div>
-                    </div>
-                    <!-- End Single List -->
+
                 </div>
             </div>
         </div>
@@ -514,30 +376,18 @@
             </div>
             <div class="brands-logo-wrapper">
                 <div class="brands-logo-carousel d-flex align-items-center justify-content-between">
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="{{ asset('https://via.placeholder.com/220x160') }}" alt="#">
-                    </div>
+                    @php
+                        $prands = App\Models\Category::all();
+                    @endphp
+                    @foreach ($prands as $brand)
+                        <div class="brand-logo">
+                            <p>{{ $brand->name }}</p>
+                            <a href="{{ route('categories.show', $brand->id) }}">
+                                <img src="{{ asset($brand->image) }}" alt="#">
+                            </a>
+                        </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>
@@ -545,95 +395,7 @@
     <!-- End Brands Area -->
 
     <!-- Start Blog Section Area -->
-    <section class="blog-section section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Our Latest News</h2>
-                        <p>There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered
-                            ')}} alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Blog -->
-                    <div class="single-blog">
-                        <div class="blog-img">
-                            <a href="blog-single-sidebar.html">
-                                <img src="{{ asset('https://via.placeholder.com/370x215') }}" alt="#">
-                            </a>
-                        </div>
-                        <div class="blog-content">
-                            <a class="category" href="javascript:void(0)">eCommerce</a>
-                            <h4>
-                                <a href="blog-single-sidebar.html">What
-                                    information is needed for shipping?</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt.</p>
-                            <div class="button">
-                                <a href="javascript:void(0)" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Blog -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Blog -->
-                    <div class="single-blog">
-                        <div class="blog-img">
-                            <a href="blog-single-sidebar.html">
-                                <img src="{{ asset('https://via.placeholder.com/370x215') }}" alt="#">
-                            </a>
-                        </div>
-                        <div class="blog-content">
-                            <a class="category" href="javascript:void(0)">Gaming</a>
-                            <h4>
-                                <a href="blog-single-sidebar.html">Interesting
-                                    fact about gaming consoles</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt.</p>
-                            <div class="button">
-                                <a href="javascript:void(0)" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Blog -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Blog -->
-                    <div class="single-blog">
-                        <div class="blog-img">
-                            <a href="blog-single-sidebar.html">
-                                <img src="{{ asset('https://via.placeholder.com/370x215') }}" alt="#">
-                            </a>
-                        </div>
-                        <div class="blog-content">
-                            <a class="category" href="javascript:void(0)">Electronic</a>
-                            <h4>
-                                <a href="blog-single-sidebar.html">Electronics,
-                                    instrumentation & control engineering
-                                </a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt.</p>
-                            <div class="button">
-                                <a href="javascript:void(0)" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Blog -->
-                </div>
-            </div>
-        </div>
-    </section>
+
     <!-- End Blog Section Area -->
 
     <!-- Start Shipping Info -->
