@@ -87,7 +87,8 @@
                                         alt="Generic placeholder image"
                                         class="img-fluid rounded-circle border border-dark border-3" style="width: 70px;">
 
-                                    <a href="{{ route('profile.edit', Auth::user()->id) }}">@lang('main.Hello')
+                                    <a href="{{ route('profile.show', Auth::user()->id) }}"
+                                        style="color: rgb(248, 175, 175)">@lang('main.Hello')
                                         {{ Auth::user()->name }}
                                     </a>
 
