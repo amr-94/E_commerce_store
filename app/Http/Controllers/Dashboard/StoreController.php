@@ -67,13 +67,19 @@ class StoreController extends Controller
      */
     public function show(string $id)
     {
-
-        $store = Store::where('slug', $id)->first();
+        $store = Store::where('slug', $id)->with('products')->first();
         $products = $store->products;
-        return view('dashboard.store.show', [
-            'store' => $store,
-            'products' => $products
-        ]);
+        $user = User::where('id', $store->user_id)->first();
+        $currentUser = Auth::user();
+        if ($currentUser->type == 'user' && $user->type == 'admin') {
+            return redirect(route('dashboard'))->with('success', 'Access denied to admin profile!');
+        } else {
+            return view('dashboard.store.show', [
+                'store' => $store,
+                'products' => $products
+
+            ]);
+        }
     }
 
     /**

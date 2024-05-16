@@ -51,21 +51,24 @@
                     <td>{{ $category->status }} </td>
                     <td>{{ $category->created_at->diffforhumans() }} </td>
                     <td>{{ $category->updated_at->diffforhumans() }} </td>
-                    <td><a href="{{ route('categories.edit', $category->id) }}"
-                            class="btn btn-sm btn-outline-success">Edit</a>
-                    </td>
-                    <td>
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                        </form>
-                    </td>
+                    @if ($category->user_id == Auth::id())
+                        <td><a href="{{ route('categories.edit', $category->id) }}"
+                                class="btn btn-sm btn-outline-success">Edit</a>
+                        </td>
+                        <td>
+                            <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="7">No Categories defined</td>
-                </tr>
+            @endif
+
+        @empty
+            <tr>
+                <td colspan="7">No Categories defined</td>
+            </tr>
             @endforelse
 
 

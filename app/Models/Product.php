@@ -40,7 +40,7 @@ class Product extends Model
      */
     public function store(): BelongsTo
     {
-        return $this->belongsTo(Store::class, 'store_id', 'id');
+        return $this->belongsTo(Store::class);
     }
     /**
      * Get the user that owns the Product

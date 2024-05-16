@@ -61,19 +61,21 @@
                     <td>{{ $product->price }} </td>
                     <td>{{ $product->featured }} </td>
                     <td>{{ $product->status }} </td>
-                    <td>{{ $product->user->name }} </td>
+                    <td>{{ $product->user->name ?? '' }} </td>
                     <td>{{ $product->created_at->diffforhumans() }} </td>
                     <td>{{ $product->updated_at->diffforhumans() }} </td>
-                    <td><a href="{{ route('products.edit', $product->id) }}"
-                            class="btn btn-sm btn-outline-success">Edit</a>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger deleteRecord"
-                            data-url="{{ route('products.destroy', $product->id) }}">Delete</a>
-                        {{-- <a href="javascript:void(0)" data-url="{{ route('products.destroy', $product->id) }}"
+                    @if ($product->user_id == Auth::id())
+                        <td><a href="{{ route('products.edit', $product->id) }}"
+                                class="btn btn-sm btn-outline-success">Edit</a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger deleteRecord"
+                                data-url="{{ route('products.destroy', $product->id) }}">Delete</a>
+                            {{-- <a href="javascript:void(0)" data-url="{{ route('products.destroy', $product->id) }}"
                             class="btn btn-danger delete-user">Delete</a> --}}
 
-                    </td>
+                        </td>
+                    @endif
                 </tr>
             @empty
                 <tr>
