@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label for="">image</label>
-            <input type="file" name="s_image" class="form-control" value="">
+            <input type="file" name="s_image" class="form-control">
             @if ($store->s_image)
                 <img src="{{ asset('store/' . $store->s_image) }}" alt="">
             @endif

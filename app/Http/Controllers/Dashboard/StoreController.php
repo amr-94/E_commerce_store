@@ -7,6 +7,7 @@ use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class StoreController extends Controller
 {
@@ -91,6 +92,8 @@ class StoreController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $store = Store::where('slug', $id)->first();
+
         $request->validate([
             'name' => ['required'],
         ]);
@@ -101,7 +104,11 @@ class StoreController extends Controller
                 'cover_image' => $filename
             ]);
         }
-        Store::where('slug', $id)->update($request->all());
+        if ($request->s_image !== null && $request->s_image !== $store->cover_image) {
+            File::delete(public_path('store/' . $store->cover_image));
+        }
+        $store->update($request->all());
+
         return redirect(route('stores.index'))->with('success', 'store updated');
     }
 
@@ -127,7 +134,10 @@ class StoreController extends Controller
     }
     public function forcedelete(string $id)
     {
-        Store::withTrashed()->where('slug', $id)->forceDelete();
+        $store = Store::withTrashed()->where('slug', $id)->forceDelete();
+        if ($store->cover_image !== null) {
+            File::delete(public_path('store/' . $store->cover_image));
+        }
         return redirect(route('stores.index'))->with('success', 'store deleted');
     }
 }

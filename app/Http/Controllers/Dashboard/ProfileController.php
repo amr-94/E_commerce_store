@@ -67,7 +67,6 @@ class ProfileController extends Controller
         $user->update([
             'phone_number' => $request->phone_number
         ]);
-
-        return redirect(route('categories.index'));
+        return redirect(route('profile.show', $user->name));
     }
 }

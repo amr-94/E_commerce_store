@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -104,6 +105,8 @@ class ProductController extends Controller
         // foreach($tags as $t_name){
 
         // }
+        $product = Product::find($id);
+
         if ($request->has('p_image')) {
             $imagename = time() . '.' . $request->p_image->extension();
             $request->p_image->move(public_path('/products'), $imagename);
@@ -117,7 +120,9 @@ class ProductController extends Controller
             'store_id' =>  Auth::user()->store_id,
 
         ]);
-        $product = Product::find($id);
+        if ($request->p_image !== null && $request->s_image !== $product->image) {
+            File::delete(public_path('prosucts/' . $product->image));
+        }
         $product->update($request->except('tags'));
         // $product->tags()->attach($request->tags);
         // $tags = json_decode($request->tags);
