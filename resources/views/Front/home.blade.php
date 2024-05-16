@@ -35,22 +35,22 @@
                 <div class="col-lg-4 col-12">
                     <div class="row">
                         @php
-                            $newproducts = App\Models\Product::where('status', 'active')
-                                ->orderBy('created_at', 'desc')
-                                ->take(1)
-                                ->get();
+                            // $newproducts = App\Models\Product::where('status', 'active')
+                            //     ->orderBy('created_at', 'desc')
+                            //     ->take(1)
+                            //     ->get();
                         @endphp
                         <div class="row">
                             <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
                                 <!-- Start Small Banner -->
                                 <div class="hero-small-banner"
-                                    style="background-image: url({{ asset($newproducts[0]->image) }});">
+                                    style="background-image: url({{ asset($products[0]->image) }});">
                                     <div class="content">
                                         <h2>
                                             <span>New Product</span>
-                                            {{ $newproducts[0]->name }}
+                                            {{ $products[0]->name }}
                                         </h2>
-                                        <h3>{{ $newproducts[0]->price }}</h3>
+                                        <h3>{{ $products[0]->price }}</h3>
                                     </div>
                                 </div>
                                 <!-- End Small Banner -->
@@ -296,7 +296,7 @@
                         <div class="list-image">
                             <a href="product-grids.html"><img
                                     src="{{ asset('https://via.placeholder.com/100x100"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ') }}  alt="#"></a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ') }}  alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
@@ -310,15 +310,15 @@
 
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 custom-responsive-margin">
-                    @php
+                    {{-- @php
                         $newarrivals = App\Models\Product::where('status', 'active')
                             ->orderBy('created_at', 'desc')
                             ->take(3)
                             ->get();
-                    @endphp
+                    @endphp --}}
                     <h4 class="list-title">New Arrivals</h4>
                     <!-- Start Single List -->
-                    @foreach ($newarrivals as $newproduct)
+                    @foreach ($products->take(3) as $newproduct)
                         <div class="single-list">
                             <div class="list-image">
                                 <a href="{{ route('front.products.show', $newproduct->slug) }}"><img
@@ -380,13 +380,13 @@
             <div class="brands-logo-wrapper">
                 <div class="brands-logo-carousel d-flex align-items-center justify-content-between">
                     @php
-                        $prands = App\Models\Category::all();
+                        $Stores = App\Models\Store::take(10)->get();
                     @endphp
-                    @foreach ($prands as $brand)
+                    @foreach ($Stores as $store)
                         <div class="brand-logo">
-                            <p>{{ $brand->name }}</p>
-                            <a href="{{ route('categories.show', $brand->id) }}">
-                                <img src="{{ asset($brand->image) }}" alt="#">
+                            <p>{{ $store->name }}</p>
+                            <a href="{{ route('stores.show', $store->slug) }}">
+                                <img src="{{ asset("store/$store->cover_image") }}" alt="#">
                             </a>
                         </div>
                     @endforeach

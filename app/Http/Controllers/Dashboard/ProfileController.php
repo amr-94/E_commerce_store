@@ -16,12 +16,17 @@ class ProfileController extends Controller
     public function show($name)
     {
         $user = User::where('name', $name)->with(['stores', 'products', 'profile'])->first();
-        return view(
-            "dashboard.profile.show",
-            [
-                'user' => $user,
-            ]
-        );
+        $currentUser = Auth::user();
+        if ($currentUser->type == 'user' && $user->type == 'admin') {
+            return redirect(route('dashboard'))->with('success', 'Access denied to admin profile!');
+        } else {
+            return view(
+                "dashboard.profile.show",
+                [
+                    'user' => $user,
+                ]
+            );
+        }
     }
     public function edit()
     {
