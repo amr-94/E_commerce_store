@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Store;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -30,7 +31,9 @@ class ProductFactory extends Factory
             'compare_price' => $this->faker->randomFloat(1, 500, 999),
             'category_id' => Category::inrandomorder()->first()->id,
             'store_id' => Store::inrandomorder()->first()->id,
-            'featured'=> rand(0,1),
+            'user_id' => User::inrandomorder()->first()->id,
+
+            'featured' => rand(0, 1),
 
 
         ];

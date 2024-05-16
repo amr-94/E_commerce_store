@@ -77,6 +77,7 @@
                             </ul>
                         </div>
                     </div>
+
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
                             @auth
@@ -90,17 +91,29 @@
                                         {{ Auth::user()->name }}
                                     </a>
 
-
                                 </div>
-                                <div class="user">
-
-
-                                    <a href="{{ route('dashboard') }}" style="color: rgb(248, 175, 175)"> @lang('main.dashboard')
-
-                                    </a>
-
-
-                                </div>
+                                <ul class="user-login">
+                                    <li> <a href="{{ route('dashboard') }}" style="color: rgb(248, 175, 175)">
+                                            @lang('main.dashboard')
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                style=" background-color: Transparent;
+                                                              background-repeat:no-repeat;
+                                                                border: none;
+                                                                    cursor:pointer;
+                                                               overflow: hidden;color: rgb(248, 175, 175) ">
+                                                Logout
+                                            </button>
+                                        </form>
+                                        </a>
+                                    </li>
+                                    <li><a href="{{ route('2FA') }}" style="color: rgb(248, 175, 175)">Enable/disable
+                                            2FA</a></li>
+                                </ul>
                             @endauth
 
                             <ul class="user-login">
@@ -171,7 +184,10 @@
                                     @php
                                         $user = App\Models\User::where('type', 'admin')->first();
                                     @endphp
-                                    <span>{{ $user->phone_number }}</span>
+                                    @if ($user !== null)
+                                        <span>{{ $user->phone_number }}</span>
+                                    @endif
+
                                 </h3>
                             </div>
                             <div class="navbar-cart">

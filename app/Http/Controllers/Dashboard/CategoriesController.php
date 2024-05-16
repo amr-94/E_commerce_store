@@ -61,10 +61,6 @@ class CategoriesController extends Controller
     {
 
         $request->validate(Category::rules());
-
-
-
-
         if ($request->has('img')) {
             $filename = time() . '.' . $request->img->extension();
             $request->img->move(public_path('categories/'), $filename);

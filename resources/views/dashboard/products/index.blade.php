@@ -18,8 +18,9 @@
             <option value="inactive">inactive</option>
             <option value="draft">draft</option>
         </select>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary" style="color: black">Search</button>
     </form>
+    <h3 class="text-center">Product Of User : {{ Auth::user()->name }}</h3>
     <table class="table">
         <thead>
             <tr>
@@ -31,6 +32,7 @@
                 <th>Price</th>
                 <th>Featured</th>
                 <th>Status</th>
+                <th>user</th>
                 <th>created_at</th>
                 <th>updated_at</th>
                 <th>Actions</th>
@@ -41,8 +43,8 @@
                 <tr>
                     <td>{{ $product->id }} </td>
                     @if ($product->image !== null)
-                        <td> <img src="{{ asset("products/$product->image") }}" class="img-circle elevation-2" width="50"
-                                height="50" style="opacity: .8"> </td>
+                        <td> <img src="{{ asset("products/$product->image") }}" class="img-circle elevation-2"
+                                width="50" height="50" style="opacity: .8"> </td>
                     @else
                         <td> <img src="{{ asset('categories/1704130929.jpg') }}" class="img-circle elevation-2"
                                 width="50" height="50" style="opacity: .8"> </td>
@@ -55,17 +57,19 @@
 
                     </td>
 
-                    <td>{{ $product->store->name }} </td>
+                    <td><a href="{{ route('stores.show', $product->store->slug) }}">{{ $product->store->name }} </a></td>
                     <td>{{ $product->price }} </td>
                     <td>{{ $product->featured }} </td>
                     <td>{{ $product->status }} </td>
+                    <td>{{ $product->user->name }} </td>
                     <td>{{ $product->created_at->diffforhumans() }} </td>
                     <td>{{ $product->updated_at->diffforhumans() }} </td>
                     <td><a href="{{ route('products.edit', $product->id) }}"
                             class="btn btn-sm btn-outline-success">Edit</a>
                     </td>
                     <td>
-                        <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger deleteRecord" data-url="{{ route('products.destroy', $product->id) }}">Delete</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger deleteRecord"
+                            data-url="{{ route('products.destroy', $product->id) }}">Delete</a>
                         {{-- <a href="javascript:void(0)" data-url="{{ route('products.destroy', $product->id) }}"
                             class="btn btn-danger delete-user">Delete</a> --}}
 
@@ -118,7 +122,7 @@
         //     });
 
         // });
-// ---------------------------------------------------------------------------- دى طريقة برضو
+        // ---------------------------------------------------------------------------- anthor way
         // $(".deleteRecord").click(function() {
         //     var id = $(this).data("id");
         //     var token = $("meta[name='csrf-token']").attr("content");
@@ -137,7 +141,7 @@
         //     });
 
         // });
-// ---------------------------------------------------------- دى طريقة
+        // ---------------------------------------------------------- anthor way
         $(".deleteRecord").click(function() {
 
             var token = $("meta[name='csrf-token']").attr("content");

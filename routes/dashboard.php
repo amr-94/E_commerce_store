@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\CategoriesController as CategoriesController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\StoreController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CheckoutController;
 use Illuminate\Support\Facades\Route;
@@ -30,12 +31,15 @@ Route::group(
 
             Route::resource('categories', CategoriesController::class);
             Route::resource('products', ProductController::class);
-            // Route::resource('categories', CategoriesController::class)->names([
-            //     'index'=>'dashboard.categories.index',
-            //     'create'=>'dashboard.categories.create'
-            // ]);
-            route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->withoutMiddleware('admin');;
-            route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update')->withoutMiddleware('admin');;
+            Route::get('stores/trash', [StoreController::class, 'trash'])->name('stores.trash');
+            Route::put('stores/trash/{name}/restore', [StoreController::class, 'restore'])->name('stores.restore');
+            Route::delete('stores/trash/{name}/force-delete', [StoreController::class, 'forcedelete'])->name('stores.forcedelete');
+
+            Route::resource('stores', StoreController::class);
+
+            route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
+            route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+            route::get('profile/{name}/show', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
 
             Route::get('product/trash', [ProductController::class, 'trash'])->name('product.trash');
             Route::put('product/trash/{name}/restore', [ProductController::class, 'restore'])->name('product.restore');

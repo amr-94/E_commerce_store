@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\profile;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -12,7 +13,16 @@ use Symfony\Component\Intl\Languages;
 
 class ProfileController extends Controller
 {
-    //
+    public function show($name)
+    {
+        $user = User::where('name', $name)->with(['stores', 'products', 'profile'])->first();
+        return view(
+            "dashboard.profile.show",
+            [
+                'user' => $user,
+            ]
+        );
+    }
     public function edit()
     {
         $profile = profile::where('user_id', Auth::user()->id)->first();
@@ -28,9 +38,6 @@ class ProfileController extends Controller
     }
     public function update(Request $request)
     {
-        // dd($request);
-
-
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -49,18 +56,16 @@ class ProfileController extends Controller
         }
         $request->merge([
             'user_id' => Auth::user()->id,
-            // 'phone_number' =>$request->phone_number
 
         ]);
         if ($request->image !== null && Auth::user()->profile->profile_image !== null) {
             File::delete(public_path('profile/' . Auth::user()->profile->profile_image));
         }
 
-
         $user = $request->user();
         Auth::user()->profile->fill($request->all())->save();
         $user->update([
-            'phone_number' =>$request->phone_number
+            'phone_number' => $request->phone_number
         ]);
 
         return redirect(route('categories.index'));

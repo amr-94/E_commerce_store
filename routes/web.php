@@ -53,5 +53,5 @@ Route::group(
 Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('auth.redirect');
 Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('auth.callback');
 
-// require __DIR__ . '/auth.php';
+require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';

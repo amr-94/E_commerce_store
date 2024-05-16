@@ -27,8 +27,9 @@
         <div class="form-group">
             <label for="">Phone Number</label>
             <input type="number" name="phone_number" class="form-control"
-                @if (Auth::user()->phone_number  !== null) value="{{ Auth::user()->phone_number }}" @endif>
-        </div> <div class="form-group">
+                @if (Auth::user()->phone_number !== null) value="{{ Auth::user()->phone_number }}" @endif>
+        </div>
+        <div class="form-group">
             <label for="">birthday</label>
             <input type="date" name="birthday" class="form-control"
                 @if ($profile !== null) value="{{ $profile->birthday }}" @endif>
@@ -94,6 +95,8 @@
             <button type="submit" class="btn btn-primary">submit
         </div>
     </form>
+
+    {{-- ------------------------------------- --}}
     @if (Auth::user()->products)
 
         <table class="table">

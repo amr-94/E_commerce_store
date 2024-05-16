@@ -52,11 +52,9 @@
                     @foreach ($tags as $tags)
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="{{ $tags->id }}" name="tags[]"
-                            @if (in_array($tags->id, $p_tags))checked @endif
-                                id="{{ $tags->id }}">
+                                @if (in_array($tags->id, $p_tags)) checked @endif id="{{ $tags->id }}">
                             <label class="form-check-label">{{ $tags->name }} </label>
                         </div>
-
                     @endforeach
                     <div class="form-group"> Tags :
                         <ul>
@@ -86,7 +84,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">submit
+                    <button type="submit" class="btn btn-primary" style="color:black">submit
                 </div>
 
 

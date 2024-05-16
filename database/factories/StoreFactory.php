@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -25,6 +26,8 @@ class StoreFactory extends Factory
             'description' => $this->faker->sentence(15),
             'logo_image' => $this->faker->imageUrl(300, 300),
             'cover_image' => $this->faker->imageUrl(800, 600), //دى الابعاد
+            'user_id' => User::inrandomorder()->first()->id,
+
 
         ];
     }

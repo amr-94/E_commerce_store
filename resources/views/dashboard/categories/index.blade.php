@@ -41,12 +41,12 @@
                                 width="50" height="50" style="opacity: .8"> </td>
                     @endif
                     <td>{{ $category->id }} </td>
-                    <td><a href="{{ route('categories.show',$category->id) }}">{{ $category->name }} </a></td>
+                    <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }} </a></td>
                     {{-- @if ($category->parent_id !== null) --}}
                     <td>{{ $category->parent->name }} </td>
                     {{-- @endif --}}
-                    <td>{{ count($category->products->where('status','active')) }} </td>
-                    <td>{{ count($category->products->where('status','inactive')) }} </td>
+                    <td>{{ count($category->products->where('status', 'active')) }} </td>
+                    <td>{{ count($category->products->where('status', 'inactive')) }} </td>
 
                     <td>{{ $category->status }} </td>
                     <td>{{ $category->created_at->diffforhumans() }} </td>

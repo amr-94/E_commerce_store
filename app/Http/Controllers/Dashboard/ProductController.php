@@ -31,7 +31,11 @@ class ProductController extends Controller
         if ($status !== null) {
             $query->where('status', $status);
         }
-        $products = $query->with('category', 'store')->paginate(10);
+        if (Auth::user()->type == 'admin') {
+            $products = $query->with('category', 'store')->paginate(10);
+        } else {
+            $products = $query->where('user_id', Auth::user()->id)->with('category', 'store')->paginate(10);
+        }
         return view('dashboard.products.index', compact('products'));
     }
 
@@ -102,7 +106,7 @@ class ProductController extends Controller
         // }
         if ($request->has('p_image')) {
             $imagename = time() . '.' . $request->p_image->extension();
-            $request->p_image->move(public_path('/products') , $imagename);
+            $request->p_image->move(public_path('/products'), $imagename);
             $request->merge([
                 'image' => $imagename
             ]);

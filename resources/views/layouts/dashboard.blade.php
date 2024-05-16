@@ -43,13 +43,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                            alt="User Image">
+                        <img src="{{ asset('profile/' . Auth::user()->profile->profile_image) }}"
+                            class="img-circle elevation-2" alt="User Image">
                     </div>
+
                     <div class="info">
                         <a href="#" class="d-block">
                             @auth
-                                <a href="{{ route('profile.edit') }}"> {{ Auth::user()->name }}</a>
+                                <a href="{{ route('profile.show', Auth::user()->name) }}"> {{ Auth::user()->name }}</a>
                                 <div class="d-flex justify-content-sm-end">
 
                                     <form action="{{ route('logout') }}" method="post">
@@ -80,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
 
-                @include('layouts.other.sidenav', ['active' => ''])
+                {{-- @include('layouts.other.sidenav', ['active' => '']) --}}
             </div>
             <!-- /.sidebar -->
         </aside>

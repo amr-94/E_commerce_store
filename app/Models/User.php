@@ -64,12 +64,22 @@ class User extends Authenticatable
         return $this->hasOne(profile::class)->withdefault();
     }
     /**
-     * Get all of the comments for the User
+     * Get all of the products for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Get all of the stores for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stores(): HasMany
+    {
+        return $this->hasMany(Store::class);
     }
 }

@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
         // ]);
         Store::factory(5)->create();
         Category::factory(10)->create();
-        Product::factory(100)->create();
+        Product::factory(30)->create();
 
 
 
-        $this->call(UserSeeder::class);
+        // $this->call(UserSeeder::class);
         //هنا بعمل استدعاء لملف السيدر اللى عملته
         //وبعدها اعمل امر php artisan db:seed
     }
