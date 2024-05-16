@@ -56,6 +56,7 @@ class OrederCreatedNotification extends Notification
         return [
             'body' => "A New order (#{$this->order->number}) created by {$adder->first_name}",
             'url' => url('/dashboard'),
+            'user' => $notifiable->user,
             // 'order_user' => route('/'),
             'order_id' => $this->order->id,
         ];
