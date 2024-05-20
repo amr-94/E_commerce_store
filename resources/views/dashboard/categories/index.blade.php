@@ -16,7 +16,7 @@
             <option value="active">active</option>
             <option value="inactive">inactive</option>
         </select>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary" style="color: black">Search</button>
     </form>
     <table class="table">
         <thead>
