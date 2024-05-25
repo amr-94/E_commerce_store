@@ -39,7 +39,7 @@ class OrederCreatedNotification extends Notification
         return (new MailMessage)
             ->subject('New Order #' . $this->order->number)
             ->greeting('Hello ' . $adder->first_name)
-            ->line("A New order (#{$this->order->number}) created by {$adder->first_name} ")
+            ->line("A New order (#{$this->order->number}) created by {$adder->first_name} {$adder->last_name} ")
             ->action('View order', url('/dashboard'))
             ->line('Thank you for using our application!');
         // ->view('') to return custome view
@@ -54,11 +54,12 @@ class OrederCreatedNotification extends Notification
     {
         $adder = $this->order->billingAdress;
         return [
-            'body' => "A New order (#{$this->order->number}) created by {$adder->first_name}",
+            'body' => "A New order (#{$this->order->number}) created by {$adder->first_name} {$adder->last_name} ",
             'url' => url('/dashboard'),
+            'order' => $this->order,
             'user' => $notifiable->user,
-            // 'order_user' => route('/'),
             'order_id' => $this->order->id,
+            'adder' => $adder,
         ];
     }
 

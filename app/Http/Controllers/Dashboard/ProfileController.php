@@ -74,4 +74,21 @@ class ProfileController extends Controller
         ]);
         return redirect(route('profile.show', $user->name));
     }
+
+
+    public function notify()
+    {
+        $notification = Auth::user()->notifications->first();
+        if ($notification !== null) {
+
+
+            $products = $notification->data['order']['products'];
+            $adder = $notification->data['adder'];
+            return view('dashboard.profile.allnotification', [
+                'products' => $products,
+                'adder' => $adder,
+            ]);
+        } else
+            return view('dashboard.profile.allnotification');
+    }
 }

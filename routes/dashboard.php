@@ -49,6 +49,8 @@ Route::group(
             // check out
             Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
             Route::post('checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+
+            Route::get('orders/notification', [ProfileController::class, 'notify'])->name('orders.notify');
         });
     }
 );
