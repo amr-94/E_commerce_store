@@ -3,7 +3,7 @@
 @section('breadcrumb', 'show profile')
 @section('content')
 
-    <table class="table">
+    {{-- <table class="table">
         <thead>
             <tr>
                 <th>body</th>
@@ -36,7 +36,7 @@
                     <td>{{ $adder['phone'] }}</td>
                     <td>{{ $notification->created_at->diffforhumans() }} </td>
                     <td>{{ $notification->updated_at->diffforhumans() }} </td>
-                    {{-- @if ($category->user_id == Auth::id())
+                    @if ($category->user_id == Auth::id())
                         <td><a href="{{ route('categories.edit', $category->id) }}"
                                 class="btn btn-sm btn-outline-success">Edit</a>
                         </td>
@@ -46,7 +46,7 @@
                                 @method('delete')
                                 <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                             </form>
-                        </td> --}}
+                        </td>
                 </tr>
             @empty
                 <tr>
@@ -54,6 +54,59 @@
                 </tr>
             @endforelse
         </tbody>
-    </table>
+    </table> --}}
+
+
+
+
+
+    <div class="container">
+        <h1>Notifications</h1>
+
+        <div>
+            @foreach (Auth::user()->notifications as $notification)
+                <div class="card my-2">
+                    <div class="card-body">
+
+                        @if ($notification->unread())
+                            <a href="{{ route('notify.read', $notification->id) }}" style="text-decoration: none;color: red">
+                        @endif
+                        <h4> Title : {{ $notification['data']['body'] }}</h4> </a>
+                        {{-- {{ dd($adder) }} --}}
+                        <p>From : {{ $adder['first_name'] }} {{ $adder['last_name'] }} / {{ $adder['street_adress'] }}</p>
+                        <p>order_id : {{ $notification['data']['order_id'] }}</p>
+                        <p>email : {{ $adder['email'] }}</p>
+                        <p>phone : {{ $adder['phone'] }}</p>
+                        {{-- {{ dd($products) }} --}}
+                        <ul> product
+                            @foreach ($products as $product)
+                                <li>product name / {{ $product['name'] }}</li>
+                                <li>product quantity / {{ 10000 - $product['quantity'] }}</li>
+                                <li>product price / {{ $product['price'] }}</li>
+                            @endforeach
+                        </ul>
+                        <p class="text-muted">{{ $notification->created_at->diffForhumans() }}</p>
+
+                    </div>
+                    {{-- <form action="{{ route('notification.destroy', $notifications->id) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-danger" type="submit">Delete Notification</button>
+                    </form> --}}
+
+
+                </div>
+            @endforeach
+        </div>
+        {{-- @if ($notifications->count() !== 0)
+            <form action="{{ route('notification.destroyall') }}" method="post">
+                @csrf
+                @method('delete')
+                <button class="btn btn-primary" type="submit">Clear all Notifications</button>
+            </form>
+        @endif --}}
+
+
+    </div>
 
 @endsection
