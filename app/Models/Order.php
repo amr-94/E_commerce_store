@@ -105,4 +105,14 @@ class Order extends Model
     {
         return $this->hasOne(OrderAdresses::class, 'order_id', 'id')->where('type', 'shipping');
     }
+
+    /**
+     * Get all of the items for the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
+    }
 }

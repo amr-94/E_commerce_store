@@ -5,8 +5,10 @@ use App\Http\Controllers\Front\Auth\TwoFactorController;
 use App\Http\Controllers\front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -52,6 +54,13 @@ Route::group(
 );
 Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('auth.redirect');
 Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('auth.callback');
+//
+Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe.index');
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
+//
+Route::get('orders/{order}/payments/callback', [PaymentsController::class, 'return'])->name('stripe.return');
+Route::get('orders/{order}/payments', [PaymentsController::class, 'create'])->name('payments.create');
+Route::post('orders/{order}/payments', [PaymentsController::class, 'store'])->name('payments.store');
 require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';
