@@ -73,6 +73,7 @@ class PaymentsController extends Controller
             if ($paymentIntent->status == 'succeeded') {
                 $order->status = 'completed';
                 $order->payment_status = 'paid';
+                $order->payment_method = $paymentIntent->payment_method;
                 $order->save();
 
                 return redirect()->route('home')->with('success', 'Payment successful.');
