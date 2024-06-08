@@ -78,6 +78,9 @@ class PaymentsController extends Controller
 
                 return redirect()->route('home')->with('success', 'Payment successful.');
             } else {
+                $order->status = 'failed';
+                $order->payment_status = 'failed';
+                $order->save();
                 return redirect()->route('payments.create', $order)->with('error', 'Payment failed.');
             }
         } catch (\Exception $e) {
@@ -86,8 +89,5 @@ class PaymentsController extends Controller
 
             return redirect()->route('payments.create', $order)->with('error', 'An error occurred while processing your payment.');
         }
-        // $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-        // $paymentIntent = $stripe->paymentIntents->retrieve($request->payment_intent, []);
-        // dd($paymentIntent);
     }
 }
